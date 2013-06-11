@@ -156,7 +156,9 @@ enum ofp_flow_wildcards {
     OFPFW_NW_DST_MASK = 0xfc000,
     OFPFW_DL_VLAN_PCP = 0x100000,
     OFPFW_NW_TOS = 0x200000,
-    OFPFW_ALL = 0x3fffff,
+    OFPFW_SRC_CLASS_ID = 0x400000,
+    OFPFW_DST_CLASS_ID = 0x800000,
+    OFPFW_ALL = 0xffffff,
 };
 
 enum ofp_action_type {
@@ -562,7 +564,8 @@ struct of_match_v1 {
     uint16_t eth_type;
     uint8_t ip_dscp;
     uint8_t ip_proto;
-    pad(2);
+    uint8_t src_class_id;
+    uint8_t dst_class_id;
     uint32_t ipv4_src;
     uint32_t ipv4_dst;
     uint16_t tcp_src;

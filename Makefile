@@ -99,7 +99,7 @@ check-py: python
 	PYTHONPATH=${LOXI_OUTPUT_DIR}/pyloxi:. python py_gen/tests/of13.py
 
 check-c: c
-	gcc -o ${LOXI_OUTPUT_DIR}/locitest/locitest ${LOXI_OUTPUT_DIR}/locitest/src/*.c ${LOXI_OUTPUT_DIR}/loci/src/*.c \
+	gcc -g -o ${LOXI_OUTPUT_DIR}/locitest/locitest ${LOXI_OUTPUT_DIR}/locitest/src/*.c ${LOXI_OUTPUT_DIR}/loci/src/*.c \
 		-I ${LOXI_OUTPUT_DIR}/loci/inc -I ${LOXI_OUTPUT_DIR}/locitest/inc -I ${LOXI_OUTPUT_DIR}/loci/src
 	${LOXI_OUTPUT_DIR}/locitest/locitest
 
