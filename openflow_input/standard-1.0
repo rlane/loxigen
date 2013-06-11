@@ -158,7 +158,7 @@ enum ofp_flow_wildcards {
     OFPFW_NW_TOS = 0x200000,
     OFPFW_SRC_CLASS_ID = 0x400000,
     OFPFW_DST_CLASS_ID = 0x800000,
-    OFPFW_ALL = 0xffffff,
+    OFPFW_ALL = 0x3fffff,
 };
 
 enum ofp_action_type {
