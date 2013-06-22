@@ -40,7 +40,7 @@ struct of_action_bsn_mirror {
 };
 
 // BSN mirroring messages
-struct of_bsn_set_mirroring {
+struct of_bsn_set_mirroring : of_header {
     uint8_t version;
     uint8_t type == 4;
     uint16_t length;
@@ -51,7 +51,7 @@ struct of_bsn_set_mirroring {
     pad(3);
 };
 
-struct of_bsn_get_mirroring_request {
+struct of_bsn_get_mirroring_request : of_header {
     uint8_t version;
     uint8_t type == 4;
     uint16_t length;
@@ -62,7 +62,7 @@ struct of_bsn_get_mirroring_request {
     pad(3);
 };
 
-struct of_bsn_get_mirroring_reply {
+struct of_bsn_get_mirroring_reply : of_header {
     uint8_t version;
     uint8_t type == 4;
     uint16_t length;
