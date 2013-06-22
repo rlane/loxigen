@@ -1078,6 +1078,8 @@ def gen_msg_test(out, name):
         for cls in of_g.ordered_messages:
             if not (cls, version) in of_g.base_length:
                 continue
+            if type_maps.class_is_virtual(cls):
+                continue
             bytes = of_g.base_length[(cls, version)]
             out.write("""
 static int
@@ -1130,6 +1132,8 @@ run_message_tests(void)
     for version in of_g.of_version_range:
         for cls in of_g.ordered_messages:
             if not (cls, version) in of_g.base_length:
+                continue
+            if type_maps.class_is_virtual(cls):
                 continue
             test_name = "%s_create_%s" % (cls, loxi_utils.version_to_name(version))
             out.write("    RUN_TEST(%s);\n" % test_name)

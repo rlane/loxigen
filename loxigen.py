@@ -359,10 +359,6 @@ def order_and_assign_object_ids():
         else:
             of_g.ordered_non_messages.append(cls)
 
-    of_g.ordered_pseudo_objects.append("of_stats_request")
-    of_g.ordered_pseudo_objects.append("of_stats_reply")
-    of_g.ordered_pseudo_objects.append("of_flow_mod")
-
     of_g.ordered_messages.sort()
     of_g.ordered_pseudo_objects.sort()
     of_g.ordered_non_messages.sort()

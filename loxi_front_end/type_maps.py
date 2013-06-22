@@ -154,6 +154,8 @@ def class_is_virtual(cls):
         return True
     if loxi_utils.class_is_list(cls):
         return True
+    if cls in ["of_flow_mod", "of_stats_request", "of_stats_reply"]:
+        return True
     return False
 
 ################################################################
