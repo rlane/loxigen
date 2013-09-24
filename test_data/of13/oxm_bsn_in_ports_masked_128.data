@@ -1,0 +1,10 @@
+-- binary
+00 03 # class
+01 # type/masked
+20 # length
+00 00 00 00 00 00 00 00 # value
+00 00 00 00 00 00 00 00 # ...
+80 00 00 01 00 00 00 00 # mask
+00 00 00 00 00 02 00 01 # ...
+-- python
+ofp.oxm.bsn_in_ports_masked_128(set(), set([0, 17, 96, 127]))
