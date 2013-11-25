@@ -123,7 +123,6 @@ class TestAllOF13(unittest.TestCase):
             if not issubclass(klass, ofp.message.Message):
                 continue
             def fn():
-                print klass
                 obj = klass(xid=42)
                 buf = obj.pack()
                 obj2 = ofp.message.parse_message(buf)

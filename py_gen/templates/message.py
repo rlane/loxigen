@@ -339,10 +339,10 @@ experimenter_stats_request_parsers = {
     0x005c16c7: {
 :: if version >= OFVersions.VERSION_1_3:
         1: bsn_lacp_stats_request.unpack,
-        100: bsn_table_entry_desc_stats_request.unpack,
-        101: bsn_table_entry_stats_request.unpack,
-        102: bsn_table_desc_stats_request.unpack,
-        103: bsn_table_bucket_stats_request.unpack,
+        2: bsn_table_entry_desc_stats_request.unpack,
+        3: bsn_table_entry_stats_request.unpack,
+        4: bsn_table_desc_stats_request.unpack,
+        5: bsn_table_bucket_stats_request.unpack,
 :: #endif
     },
 }
@@ -351,10 +351,10 @@ experimenter_stats_reply_parsers = {
     0x005c16c7: {
 :: if version >= OFVersions.VERSION_1_3:
         1: bsn_lacp_stats_reply.unpack,
-        100: bsn_table_entry_desc_stats_reply.unpack,
-        101: bsn_table_entry_stats_reply.unpack,
-        102: bsn_table_desc_stats_reply.unpack,
-        103: bsn_table_bucket_stats_reply.unpack,
+        2: bsn_table_entry_desc_stats_reply.unpack,
+        3: bsn_table_entry_stats_reply.unpack,
+        4: bsn_table_desc_stats_reply.unpack,
+        5: bsn_table_bucket_stats_reply.unpack,
 :: #endif
     },
 }
