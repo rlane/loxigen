@@ -1,0 +1,7 @@
+-- binary
+00 03 # class
+00 # type
+08 # length
+00 00 00 05 # value
+-- python
+ofp.tlv.bsn_test_port(5)
