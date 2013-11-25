@@ -50,7 +50,7 @@ struct of_bsn_table_entry_add : of_bsn_header {
     uint16_t length;
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 100; /* XXX */
+    uint32_t subtype == 46;
     uint64_t cookie;
     uint16_t table_id;
     uint16_t key_length;
@@ -64,7 +64,7 @@ struct of_bsn_table_entry_delete : of_bsn_header {
     uint16_t length;
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 101; /* XXX */
+    uint32_t subtype == 47;
     uint16_t table_id;
     list(of_tlv_t) key;
 };
@@ -75,7 +75,7 @@ struct of_bsn_table_clear : of_bsn_header {
     uint16_t length;
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 102; /* XXX */
+    uint32_t subtype == 48;
     uint64_t cookie;
     uint64_t cookie_mask;
     uint16_t table_id;
@@ -90,7 +90,7 @@ struct of_bsn_table_entry_desc_stats_request : of_bsn_stats_request {
     enum ofp_stats_request_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 100; /* XXX */
+    uint32_t subtype == 2;
     uint64_t cookie;
     uint64_t cookie_mask;
     uint16_t table_id;
@@ -113,7 +113,7 @@ struct of_bsn_table_entry_desc_stats_reply : of_bsn_stats_reply {
     enum ofp_stats_reply_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 100; /* XXX */
+    uint32_t subtype == 2;
     list(of_bsn_table_entry_desc_stats_entry_t) entries;
 };
 
@@ -134,7 +134,7 @@ struct of_bsn_table_entry_stats_request : of_bsn_stats_request {
     enum ofp_stats_request_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 101; /* XXX */
+    uint32_t subtype == 3;
     uint64_t cookie;
     uint64_t cookie_mask;
     uint16_t table_id;
@@ -149,7 +149,7 @@ struct of_bsn_table_entry_stats_reply : of_bsn_stats_reply {
     enum ofp_stats_reply_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 101; /* XXX */
+    uint32_t subtype == 3;
     list(of_bsn_table_entry_stats_entry_t) entries;
 };
 
@@ -162,7 +162,7 @@ struct of_bsn_table_desc_stats_request : of_bsn_stats_request {
     enum ofp_stats_request_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 102; /* XXX */
+    uint32_t subtype == 4;
 };
 
 struct of_bsn_table_desc_stats_entry {
@@ -180,7 +180,7 @@ struct of_bsn_table_desc_stats_reply : of_bsn_stats_reply {
     enum ofp_stats_reply_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 102; /* XXX */
+    uint32_t subtype == 4;
     list(of_bsn_table_desc_stats_entry_t) entries;
 };
 
@@ -193,13 +193,11 @@ struct of_bsn_table_bucket_stats_request : of_bsn_stats_request {
     enum ofp_stats_request_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 103; /* XXX */
+    uint32_t subtype == 5;
     uint16_t table_id;
 };
 
 struct of_bsn_table_bucket_stats_entry {
-    uint32_t size;
-    pad(4);
     uint64_t checksum;
 };
 
@@ -212,6 +210,6 @@ struct of_bsn_table_bucket_stats_reply : of_bsn_stats_reply {
     enum ofp_stats_reply_flags flags;
     pad(4);
     uint32_t experimenter == 0x5c16c7;
-    uint32_t subtype == 103; /* XXX */
+    uint32_t subtype == 5;
     list(of_bsn_table_bucket_stats_entry_t) entries;
 };

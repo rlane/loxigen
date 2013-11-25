@@ -3,7 +3,7 @@
 00 40 # length
 12 34 56 78 # xid
 00 5c 16 c7 # experimenter
-00 00 00 64 # subtype
+00 00 00 2e # subtype
 fe dc ba 98 76 54 32 10 # cookie
 00 14 # table_id
 00 12 # key_length
