@@ -83,7 +83,7 @@ modules = {
     1: ["action", "common", "const", "message", "util"],
     2: ["action", "common", "const", "instruction", "message", "util"],
     3: ["action", "common", "const", "instruction", "message", "oxm", "util"],
-    4: ["action", "common", "const", "instruction", "message", "meter_band", "oxm", "util"],
+    4: ["action", "common", "const", "instruction", "message", "meter_band", "oxm", "tlv", "util"],
 }
 
 def make_gen(name, version):

@@ -182,6 +182,11 @@ variable_elem_len_lists = {
     'list(of_meter_stats_t)': 'common.unpack_list_meter_stats',
     'list(of_packet_queue_t)': 'common.unpack_list_packet_queue',
     'list(of_queue_prop_t)': 'common.unpack_list_queue_prop',
+    'list(of_tlv_t)': 'tlv.unpack_list',
+    'list(of_bsn_table_entry_desc_stats_entry_t)': 'common.unpack_list_bsn_table_entry_desc_stats_entry',
+    'list(of_bsn_table_entry_stats_entry_t)': 'common.unpack_list_bsn_table_entry_stats_entry',
+    'list(of_bsn_table_desc_stats_entry_t)': 'common.unpack_list_bsn_table_desc_stats_entry',
+    'list(of_bsn_table_bucket_stats_entry_t)': 'common.unpack_list_bsn_table_bucket_stats_entry',
 }
 
 for (cls, deserializer) in variable_elem_len_lists.items():
@@ -204,6 +209,8 @@ fixed_elem_len_lists = {
     'list(of_uint32_t)': 'common.uint32.unpack',
     'list(of_uint8_t)': 'common.uint8.unpack',
     'list(of_bsn_lacp_stats_entry_t)': 'common.bsn_lacp_stats_entry.unpack',
+    'list(of_bsn_table_desc_stats_entry_t)': 'common.bsn_table_desc_stats_entry.unpack',
+    'list(of_bsn_table_bucket_stats_entry_t)': 'common.bsn_table_bucket_stats_entry.unpack',
 }
 
 for (cls, element_deserializer) in fixed_elem_len_lists.items():

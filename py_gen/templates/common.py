@@ -37,6 +37,7 @@ import instruction # for unpack_list
 :: #endif
 :: if version >= OFVersions.VERSION_1_3:
 import meter_band # for unpack_list
+import tlv # for unpack_list
 :: #endif
 import const
 import util
@@ -88,6 +89,12 @@ def unpack_list_meter_stats(reader):
         length, = reader.peek('!4xH')
         return meter_stats.unpack(reader.slice(length))
     return loxi.generic_util.unpack_list(reader, wrapper)
+
+def unpack_list_bsn_table_entry_desc_stats_entry(reader):
+    return loxi.generic_util.unpack_list_lv16(reader, bsn_table_entry_desc_stats_entry.unpack)
+
+def unpack_list_bsn_table_entry_stats_entry(reader):
+    return loxi.generic_util.unpack_list_lv16(reader, bsn_table_entry_stats_entry.unpack)
 
 :: for ofclass in ofclasses:
 :: include('_ofclass.py', ofclass=ofclass, superclass="object")

@@ -50,6 +50,8 @@ def generate_pyname(cls):
         return cls[14:]
     elif utils.class_is_instruction(cls):
         return cls[15:]
+    elif utils.class_is_tlv(cls):
+        return cls[7:]
     else:
         return cls[3:]
 
@@ -147,6 +149,11 @@ def generate_pp(out, name, version):
 
 def generate_util(out, name, version):
     util.render_template(out, 'util.py', version=version)
+
+def generate_tlv(out, name, version):
+    ofclasses = [x for x in ofclasses_by_version[version]
+                 if utils.class_is_tlv(x.name)]
+    util.render_template(out, 'tlv.py', ofclasses=ofclasses, version=version)
 
 def init():
     for version in loxi_globals.OFVersions.target_versions:

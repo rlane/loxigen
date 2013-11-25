@@ -44,6 +44,7 @@ import instruction # for unpack_list
 :: #endif
 :: if version >= OFVersions.VERSION_1_3:
 import meter_band # for unpack_list
+import tlv # for unpack_list
 :: #endif
 import util
 import loxi.generic_util
@@ -338,6 +339,10 @@ experimenter_stats_request_parsers = {
     0x005c16c7: {
 :: if version >= OFVersions.VERSION_1_3:
         1: bsn_lacp_stats_request.unpack,
+        100: bsn_table_entry_desc_stats_request.unpack,
+        101: bsn_table_entry_stats_request.unpack,
+        102: bsn_table_desc_stats_request.unpack,
+        103: bsn_table_bucket_stats_request.unpack,
 :: #endif
     },
 }
@@ -346,6 +351,10 @@ experimenter_stats_reply_parsers = {
     0x005c16c7: {
 :: if version >= OFVersions.VERSION_1_3:
         1: bsn_lacp_stats_reply.unpack,
+        100: bsn_table_entry_desc_stats_reply.unpack,
+        101: bsn_table_entry_stats_reply.unpack,
+        102: bsn_table_desc_stats_reply.unpack,
+        103: bsn_table_bucket_stats_reply.unpack,
 :: #endif
     },
 }
