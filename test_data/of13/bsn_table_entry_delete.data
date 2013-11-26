@@ -1,0 +1,25 @@
+-- binary
+04 04 # version, type
+00 24 # length
+12 34 56 78 # xid
+00 5c 16 c7 # experimenter
+00 00 00 2f # subtype
+00 14 # table_id
+
+00 03 # key[0].class
+00 # key[0].type
+08 # key[0].length
+00 00 00 05 # key[0].value
+
+00 03 # key[1].class
+01 # key[1].type
+0a # key[1].length
+01 23 45 67 89 ab # key[1].value
+-- python
+ofp.message.bsn_table_entry_delete(
+    xid=0x12345678,
+    table_id=20,
+    key=[
+        ofp.tlv.bsn_test_port(5),
+        ofp.tlv.bsn_test_mac([0x01, 0x23, 0x45, 0x67, 0x89, 0xab]),
+    ])
