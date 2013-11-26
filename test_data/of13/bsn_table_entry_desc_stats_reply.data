@@ -1,0 +1,56 @@
+-- binary
+04 13 # version, type
+00 64 # length
+12 34 56 78 # xid
+ff ff # stats_type
+00 00 # flags
+00 00 00 00 # pad
+00 5c 16 c7 # experimenter
+00 00 00 2 # subtype
+
+# entries[0]
+00 26 # length
+00 08 # key_length
+fe dc ba 98 76 54 32 10 ff ee cc bb aa 99 88 00 # checksum
+00 03 # key[0].class
+00 # key[0].type
+08 # key[0].length
+00 00 00 05 # key[0].value
+00 03 # value[0].class
+01 # value[0].type
+0a # value[0].length
+ff ee dd cc bb 00 # value[0].value
+
+# entries[1]
+00 26 # length
+00 08 # key_length
+fe dc ba 98 76 54 32 10 ff ee cc bb aa 99 88 01 # checksum
+00 03 # key[0].class
+00 # key[0].type
+08 # key[0].length
+00 00 00 06 # key[0].value
+00 03 # value[0].class
+01 # value[0].type
+0a # value[0].length
+ff ee dd cc bb 01 # value[0].value
+-- python
+ofp.message.bsn_table_entry_desc_stats_reply(
+    xid=0x12345678,
+    entries=[
+        ofp.bsn_table_entry_desc_stats_entry(
+            checksum=0xFEDCBA9876543210FFEECCBBAA998800,
+            key=[
+                ofp.tlv.bsn_test_port(5),
+            ],
+            value=[
+                ofp.tlv.bsn_test_mac([0xff, 0xee, 0xdd, 0xcc, 0xbb, 0x00]),
+            ]),
+        ofp.bsn_table_entry_desc_stats_entry(
+            checksum=0xFEDCBA9876543210FFEECCBBAA998801,
+            key=[
+                ofp.tlv.bsn_test_port(6),
+            ],
+            value=[
+                ofp.tlv.bsn_test_mac([0xff, 0xee, 0xdd, 0xcc, 0xbb, 0x01]),
+            ]),
+    ])
