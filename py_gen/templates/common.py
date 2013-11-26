@@ -96,6 +96,9 @@ def unpack_list_bsn_table_entry_desc_stats_entry(reader):
 def unpack_list_bsn_table_entry_stats_entry(reader):
     return loxi.generic_util.unpack_list_lv16(reader, bsn_table_entry_stats_entry.unpack)
 
+def unpack_list_bsn_table_desc_stats_entry(reader):
+    return loxi.generic_util.unpack_list_lv16(reader, bsn_table_desc_stats_entry.unpack)
+
 :: for ofclass in ofclasses:
 :: include('_ofclass.py', ofclass=ofclass, superclass="object")
 

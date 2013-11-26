@@ -214,7 +214,6 @@ fixed_elem_len_lists = {
     'list(of_uint32_t)': 'common.uint32.unpack',
     'list(of_uint8_t)': 'common.uint8.unpack',
     'list(of_bsn_lacp_stats_entry_t)': 'common.bsn_lacp_stats_entry.unpack',
-    'list(of_bsn_table_desc_stats_entry_t)': 'common.bsn_table_desc_stats_entry.unpack',
     'list(of_bsn_table_bucket_stats_entry_t)': 'common.bsn_table_bucket_stats_entry.unpack',
 }
 
