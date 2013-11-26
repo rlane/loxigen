@@ -105,6 +105,11 @@ type_data_map = {
         pack='util.pack_bitmap_128(%s)',
         unpack="util.unpack_bitmap_128(%s)"),
 
+    'of_checksum_128_t': OFTypeData(
+        init='0',
+        pack='util.pack_checksum_128(%s)',
+        unpack="util.unpack_checksum_128(%s)"),
+
     # HACK need the match_v3 length field
     'list(of_oxm_t)': OFTypeData(
         init='[]',

@@ -162,3 +162,10 @@ def unpack_bitmap_128(reader):
         i += 1
         x >>= 1
     return value
+
+def pack_checksum_128(value):
+    return struct.pack("!QQ", (value >> 64) & MASK64, value & MASK64)
+
+def unpack_checksum_128(reader):
+    hi, lo = reader.read("!QQ")
+    return (hi << 64) | lo

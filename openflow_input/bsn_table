@@ -30,6 +30,9 @@
 
 #version 4
 
+// LOXI includes a built-in type of_checksum_128_t, which is 128 bits but
+// only requires 32-bit alignment.
+
 // As a special case, not prefixing this name with "bsn".
 // Vendors are intended to subclass of_tlv.
 struct of_tlv {
@@ -51,9 +54,9 @@ struct of_bsn_table_entry_add : of_bsn_header {
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 46;
-    uint64_t checksum;
     uint16_t table_id;
     uint16_t key_length;
+    of_checksum_128_t checksum;
     list(of_tlv_t) key;
     list(of_tlv_t) value;
 };
@@ -76,9 +79,10 @@ struct of_bsn_table_clear : of_bsn_header {
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 48;
-    uint64_t checksum;
-    uint64_t checksum_mask;
     uint16_t table_id;
+    pad(2);
+    of_checksum_128_t checksum;
+    of_checksum_128_t checksum_mask;
 };
 
 struct of_bsn_table_set_buckets_size : of_bsn_header {
@@ -101,14 +105,16 @@ struct of_bsn_table_entry_desc_stats_request : of_bsn_stats_request {
     pad(4);
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 2;
-    uint64_t checksum;
-    uint64_t checksum_mask;
     uint16_t table_id;
+    pad(2);
+    of_checksum_128_t checksum;
+    of_checksum_128_t checksum_mask;
 };
 
 struct of_bsn_table_entry_desc_stats_entry {
     uint16_t length;
     uint16_t key_length;
+    of_checksum_128_t checksum;
     list(of_tlv_t) key;
     list(of_tlv_t) value;
     // TODO pad?
@@ -137,9 +143,9 @@ struct of_bsn_table_entry_stats_request : of_bsn_stats_request {
     pad(4);
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 3;
-    uint64_t checksum;
-    uint64_t checksum_mask;
-    uint16_t table_id;
+    pad(2);
+    of_checksum_128_t checksum;
+    of_checksum_128_t checksum_mask;
 };
 
 struct of_bsn_table_entry_stats_entry {
@@ -208,7 +214,7 @@ struct of_bsn_table_bucket_stats_request : of_bsn_stats_request {
 };
 
 struct of_bsn_table_bucket_stats_entry {
-    uint64_t checksum;
+    of_checksum_128_t checksum;
 };
 
 struct of_bsn_table_bucket_stats_reply : of_bsn_stats_reply {
