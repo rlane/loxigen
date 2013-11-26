@@ -145,6 +145,7 @@ struct of_bsn_table_entry_stats_request : of_bsn_stats_request {
     pad(4);
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 3;
+    uint16_t table_id;
     pad(2);
     of_checksum_128_t checksum;
     of_checksum_128_t checksum_mask;
