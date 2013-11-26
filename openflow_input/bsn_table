@@ -51,7 +51,7 @@ struct of_bsn_table_entry_add : of_bsn_header {
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 46;
-    uint64_t cookie;
+    uint64_t checksum;
     uint16_t table_id;
     uint16_t key_length;
     list(of_tlv_t) key;
@@ -76,8 +76,8 @@ struct of_bsn_table_clear : of_bsn_header {
     uint32_t xid;
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 48;
-    uint64_t cookie;
-    uint64_t cookie_mask;
+    uint64_t checksum;
+    uint64_t checksum_mask;
     uint16_t table_id;
 };
 
@@ -91,8 +91,8 @@ struct of_bsn_table_entry_desc_stats_request : of_bsn_stats_request {
     pad(4);
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 2;
-    uint64_t cookie;
-    uint64_t cookie_mask;
+    uint64_t checksum;
+    uint64_t checksum_mask;
     uint16_t table_id;
 };
 
@@ -135,8 +135,8 @@ struct of_bsn_table_entry_stats_request : of_bsn_stats_request {
     pad(4);
     uint32_t experimenter == 0x5c16c7;
     uint32_t subtype == 3;
-    uint64_t cookie;
-    uint64_t cookie_mask;
+    uint64_t checksum;
+    uint64_t checksum_mask;
     uint16_t table_id;
 };
 
