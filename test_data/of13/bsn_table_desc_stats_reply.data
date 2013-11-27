@@ -1,0 +1,30 @@
+-- binary
+04 13 # version, type
+00 60 # length
+12 34 56 78 # xid
+ff ff # stats_type
+00 00 # flags
+00 00 00 00 # pad
+00 5c 16 c7 # experimenter
+00 00 00 04 # subtype
+
+# entries[0]
+00 24 # length
+00 00 # table id
+74 61 62 6c 65 20 30 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 # name
+
+# entries[1]
+00 24 # length
+00 01 # table id
+74 61 62 6c 65 20 31 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e 2e # name
+-- python
+ofp.message.bsn_table_desc_stats_reply(
+    xid=0x12345678,
+    entries=[
+        ofp.bsn_table_desc_stats_entry(
+            table_id=0,
+            name="table 0"),
+        ofp.bsn_table_desc_stats_entry(
+            table_id=1,
+            name="table 1".ljust(32, '.')),
+    ])
