@@ -1,0 +1,20 @@
+-- binary
+04 13 # version, type
+00 38 # length
+12 34 56 78 # xid
+ff ff # stats_type
+00 00 # flags
+00 00 00 00 # pad
+00 5c 16 c7 # experimenter
+00 00 00 05 # subtype
+88 77 66 55 44 33 22 11 FF EE DD CC BB AA 99 88 # entries[0].checksum
+12 34 23 45 34 56 45 67 56 78 67 89 78 9A 89 AB # entries[1].checksum
+-- python
+ofp.message.bsn_table_bucket_stats_reply(
+    xid=0x12345678,
+    entries=[
+        ofp.bsn_table_bucket_stats_entry(
+            checksum=0x8877665544332211FFEEDDCCBBAA9988),
+        ofp.bsn_table_bucket_stats_entry(
+            checksum=0x123423453456456756786789789A89AB),
+    ])
