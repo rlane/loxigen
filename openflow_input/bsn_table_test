@@ -49,3 +49,17 @@ struct of_tlv_bsn_test_mac : of_tlv_bsn {
     uint8_t length;
     of_mac_addr_t value;
 };
+
+struct of_tlv_bsn_test_rx_packets : of_tlv_bsn {
+    uint16_t tlv_class == 0x0003;
+    uint8_t type == 2;
+    uint8_t length;
+    uint64_t value;
+};
+
+struct of_tlv_bsn_test_tx_packets : of_tlv_bsn {
+    uint16_t tlv_class == 0x0003;
+    uint8_t type == 3;
+    uint8_t length;
+    uint64_t value;
+};
