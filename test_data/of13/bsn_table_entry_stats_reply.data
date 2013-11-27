@@ -1,0 +1,62 @@
+-- binary
+04 13 # version, type
+00 60 # length
+12 34 56 78 # xid
+ff ff # stats_type
+00 00 # flags
+00 00 00 00 # pad
+00 5c 16 c7 # experimenter
+00 00 00 03 # subtype
+
+# entries[0]
+00 24 # length
+00 08 # key_length
+00 03 # key[0].class
+00 # key[0].type
+08 # key[0].length
+00 00 00 05 # key[0].value
+00 03 # stats[0].class
+02 # stats[0].type
+0c # stats[0].length
+00 00 00 00 00 00 00 64 # stats[0].value
+00 03 # stats[0].class
+03 # stats[0].type
+0c # stats[0].length
+00 00 00 00 00 00 00 65 # stats[0].value
+
+# entries[1]
+00 24 # length
+00 08 # key_length
+00 03 # key[0].class
+00 # key[0].type
+08 # key[0].length
+00 00 00 06 # key[0].value
+00 03 # stats[0].class
+02 # stats[0].type
+0c # stats[0].length
+00 00 00 00 00 00 00 64 # stats[0].value
+00 03 # stats[0].class
+03 # stats[0].type
+0c # stats[0].length
+00 00 00 00 00 00 00 65 # stats[0].value
+-- python
+ofp.message.bsn_table_entry_stats_reply(
+    xid=0x12345678,
+    entries=[
+        ofp.bsn_table_entry_stats_entry(
+            key=[
+                ofp.tlv.bsn_test_port(5),
+            ],
+            stats=[
+                ofp.tlv.bsn_test_rx_packets(100),
+                ofp.tlv.bsn_test_tx_packets(101),
+            ]),
+        ofp.bsn_table_entry_stats_entry(
+            key=[
+                ofp.tlv.bsn_test_port(6),
+            ],
+            stats=[
+                ofp.tlv.bsn_test_rx_packets(100),
+                ofp.tlv.bsn_test_tx_packets(101),
+            ]),
+    ])
