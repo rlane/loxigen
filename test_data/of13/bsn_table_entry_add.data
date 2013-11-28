@@ -40,3 +40,19 @@ ofp.message.bsn_table_entry_add(
         ofp.tlv.bsn_test_port(6),
         ofp.tlv.bsn_test_mac([0xff, 0xee, 0xdd, 0xcc, 0xbb, 0xaa]),
     ])
+-- java
+builder.setXid(0x12345678)
+    .setChecksum(OFChecksum128.of(0xFEDCBA9876543210L, 0xFFEECCBBAA998877L))
+    .setTableId(20)
+    .setKey(
+        ImmutableList.<OFTlv>of(
+            factory.tlvBsnTestPort(OFPort.of(5)),
+            factory.tlvBsnTestMac(MacAddress.of("01:23:45:67:89:ab"))
+        )
+    )
+    .setValue(
+        ImmutableList.<OFTlv>of(
+            factory.tlvBsnTestPort(OFPort.of(6)),
+            factory.tlvBsnTestMac(MacAddress.of("ff:ee:dd:cc:bb:aa"))
+        )
+    )
