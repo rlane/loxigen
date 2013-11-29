@@ -104,6 +104,9 @@ class OFReader(object):
         result = st.unpack_from(self.buf, self.offset)
         return result
 
+    def peek_all(self):
+        return str(buffer(self.buf, self.offset))
+
     def skip(self, length):
         if self.offset + length > len(self.buf):
             raise loxi.ProtocolError("Buffer too short")

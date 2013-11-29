@@ -38,10 +38,9 @@ import loxi.generic_util
 import loxi
 
 def unpack_list(reader):
+    import parser
     def deserializer(reader, typ):
-        parser = parsers.get(typ)
-        if not parser: raise loxi.ProtocolError("unknown meter band type %d" % typ)
-        return parser(reader)
+        return parser.parse_meter_band(reader.peek_all())
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 class MeterBand(object):
@@ -52,17 +51,3 @@ class MeterBand(object):
 :: include('_ofclass.py', ofclass=ofclass, superclass="MeterBand")
 
 :: #endfor
-
-parsers = {
-:: sort_key = lambda x: x.type_members[0].value
-:: msgtype_groups = itertools.groupby(sorted(ofclasses, key=sort_key), sort_key)
-:: for (k, v) in msgtype_groups:
-:: k = util.constant_for_value(version, "ofp_meter_band_type", k)
-:: v = list(v)
-:: if len(v) == 1:
-    ${k} : ${v[0].pyname}.unpack,
-:: else:
-    ${k} : parse_${k[12:].lower()},
-:: #endif
-:: #endfor
-}

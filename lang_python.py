@@ -80,10 +80,10 @@ versions = {
 prefix = 'pyloxi/loxi'
 
 modules = {
-    1: ["action", "common", "const", "message", "util"],
-    2: ["action", "common", "const", "instruction", "message", "util"],
-    3: ["action", "common", "const", "instruction", "message", "oxm", "util"],
-    4: ["action", "common", "const", "instruction", "message", "meter_band", "oxm", "util"],
+    1: ["action", "common", "const", "message", "parser", "util"],
+    2: ["action", "common", "const", "instruction", "message", "parser", "util"],
+    3: ["action", "common", "const", "instruction", "message", "oxm", "parser", "util"],
+    4: ["action", "common", "const", "instruction", "message", "meter_band", "oxm", "parser", "util"],
 }
 
 def make_gen(name, version):

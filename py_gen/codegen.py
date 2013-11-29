@@ -25,7 +25,7 @@
 # EPL for the specific language governing permissions and limitations
 # under the EPL.
 
-from collections import namedtuple
+from collections import namedtuple, defaultdict
 import loxi_globals
 import struct
 import template_utils
@@ -40,18 +40,34 @@ PyOFClass = namedtuple('PyOFClass', ['name', 'pyname', 'members', 'type_members'
                                      'min_length', 'is_fixed_length',
                                      'has_internal_alignment', 'has_external_alignment'])
 
-# Return the name for the generated Python class
+# Return the module and class names for the generated Python class
 def generate_pyname(cls):
     if utils.class_is_action(cls):
-        return cls[10:]
+        if cls == "of_action":
+            return 'action', 'action'
+        else:
+            return 'action', cls[10:]
     elif utils.class_is_oxm(cls):
-        return cls[7:]
+        if cls == 'of_oxm':
+            return 'oxm', 'oxm'
+        else:
+            return 'oxm', cls[7:]
     elif utils.class_is_meter_band(cls):
-        return cls[14:]
+        if cls == 'of_meter_band':
+            return 'meter_band', 'meter_band'
+        else:
+            return 'meter_band', cls[14:]
     elif utils.class_is_instruction(cls):
-        return cls[15:]
+        if cls == 'of_instruction':
+            return 'instruction', 'instruction'
+        else:
+            return 'instruction', cls[15:]
+    elif cls == 'of_header':
+            return 'message', 'message'
+    elif utils.class_is_message(cls):
+        return 'message', cls[3:]
     else:
-        return cls[3:]
+        return 'common', cls[3:]
 
 # Create intermediate representation, extended from the LOXI IR
 # HACK the oftype member attribute is replaced with an OFType instance
@@ -91,7 +107,7 @@ def build_ofclasses(version):
 
         ofclasses.append(
             PyOFClass(name=cls,
-                      pyname=generate_pyname(cls),
+                      pyname=generate_pyname(cls)[1],
                       members=members,
                       type_members=type_members,
                       min_length=ofclass.base_length,
@@ -147,6 +163,46 @@ def generate_pp(out, name, version):
 
 def generate_util(out, name, version):
     util.render_template(out, 'util.py', version=version)
+
+Parser = namedtuple("Parser",
+                    ["name",
+                     "discriminator_offset",
+                     "discriminator_length",
+                     "children"])
+
+# These should probably be removed from openflow_input
+parser_blacklist = set([
+    "of_experimenter_stats_header",
+])
+
+def generate_parser(out, name, version):
+    def parser_name(ofclass):
+        module_name, class_name = generate_pyname(ofclass.name)
+        if ofclass.virtual:
+            if module_name == class_name:
+                return "parse_%s" % module_name
+            else:
+                return "parse_%s_%s" % (module_name, class_name)
+        else:
+            return "%s.%s.unpack" % (module_name, class_name)
+
+    children = defaultdict(dict)
+    for ofclass in loxi_globals.ir[version].classes:
+        if ofclass.superclass:
+            type_field_name = ofclass.superclass.discriminator.name
+            type_value = ofclass.member_by_name(type_field_name).value
+            children[ofclass.superclass.name][type_value] = parser_name(ofclass)
+
+    parsers = []
+    for ofclass in loxi_globals.ir[version].classes:
+        if ofclass.virtual and ofclass.name not in parser_blacklist:
+            parsers.append(Parser(
+                name=parser_name(ofclass),
+                discriminator_offset=ofclass.discriminator.offset,
+                discriminator_length=ofclass.discriminator.length,
+                children=children[ofclass.name]))
+
+    util.render_template(out, 'parser.py', version=version, parsers=parsers)
 
 def init():
     for version in loxi_globals.OFVersions.target_versions:

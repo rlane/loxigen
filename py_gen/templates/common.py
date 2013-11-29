@@ -53,11 +53,9 @@ def unpack_list_flow_stats_entry(reader):
     return loxi.generic_util.unpack_list_lv16(reader, flow_stats_entry.unpack)
 
 def unpack_list_queue_prop(reader):
+    import parser
     def deserializer(reader, typ):
-        if typ == const.OFPQT_MIN_RATE:
-            return queue_prop_min_rate.unpack(reader)
-        else:
-            raise loxi.ProtocolError("unknown queue prop %d" % typ)
+        return parser.parse_common_queue_prop(reader.peek_all())
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 def unpack_list_packet_queue(reader):
@@ -67,10 +65,11 @@ def unpack_list_packet_queue(reader):
     return loxi.generic_util.unpack_list(reader, wrapper)
 
 def unpack_list_hello_elem(reader):
+    import parser
     def deserializer(reader, typ):
-        if typ == const.OFPHET_VERSIONBITMAP:
-            return hello_elem_versionbitmap.unpack(reader)
-        else:
+        try:
+            return parser.parse_common_hello_elem(reader.peek_all())
+        except loxi.ProtocolError:
             return None
     return [x for x in loxi.generic_util.unpack_list_tlv16(reader, deserializer) if x != None]
 

@@ -39,10 +39,9 @@ import loxi.generic_util
 import loxi
 
 def unpack_list(reader):
+    import parser
     def deserializer(reader, typ):
-        parser = parsers.get(typ)
-        if not parser: raise loxi.ProtocolError("unknown instruction type %d" % typ)
-        return parser(reader)
+        return parser.parse_instruction(reader.peek_all())
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 class Instruction(object):
@@ -53,43 +52,3 @@ class Instruction(object):
 :: include('_ofclass.py', ofclass=ofclass, superclass="Instruction")
 
 :: #endfor
-
-def parse_experimenter(reader):
-    experimenter, = reader.peek("!4xL")
-    if experimenter == 0x005c16c7: # Big Switch Networks
-        subtype, = reader.peek("!8xL")
-    else:
-        raise loxi.ProtocolError("unexpected experimenter id %#x" % experimenter)
-
-    if subtype in experimenter_parsers[experimenter]:
-        return experimenter_parsers[experimenter][subtype](reader)
-    else:
-        raise loxi.ProtocolError("unexpected experimenter id %#x subtype %#x" % (experimenter, subtype))
-
-parsers = {
-:: sort_key = lambda x: x.type_members[0].value
-:: msgtype_groups = itertools.groupby(sorted(ofclasses, key=sort_key), sort_key)
-:: for (k, v) in msgtype_groups:
-:: k = util.constant_for_value(version, "ofp_instruction_type", k)
-:: v = list(v)
-:: if len(v) == 1 and k != 'const.OFPIT_EXPERIMENTER':
-    ${k} : ${v[0].pyname}.unpack,
-:: else:
-    ${k} : parse_${k[12:].lower()},
-:: #endif
-:: #endfor
-}
-
-:: experimenter_ofclasses = [x for x in ofclasses if x.type_members[0].value == 0xffff]
-:: sort_key = lambda x: x.type_members[1].value
-:: experimenter_ofclasses.sort(key=sort_key)
-:: grouped = itertools.groupby(experimenter_ofclasses, sort_key)
-experimenter_parsers = {
-:: for (experimenter, v) in grouped:
-    ${experimenter} : {
-:: for ofclass in v:
-        ${ofclass.type_members[2].value}: ${ofclass.pyname}.unpack,
-:: #endfor
-    },
-:: #endfor
-}
