@@ -47,7 +47,7 @@ class TestUnpackListLV16(unittest.TestCase):
     def test_simple(self):
         def deserializer(reader):
             reader.skip(2)
-            return reader.read_all()
+            return str(reader.read_all())
         reader = loxi.generic_util.OFReader("\x00\x05abc\x00\x04de\x00\x03f\x00\x02")
         a = loxi.generic_util.unpack_list_lv16(reader, deserializer)
         self.assertEquals(['abc', 'de', 'f', ''], a)
@@ -106,14 +106,14 @@ class TestOFReader(unittest.TestCase):
     def test_read_all(self):
         reader = OFReader("abcdefg")
         reader.skip(2)
-        self.assertEquals(reader.read_all(), "cdefg")
-        self.assertEquals(reader.read_all(), "")
+        self.assertEquals(str(reader.read_all()), "cdefg")
+        self.assertEquals(str(reader.read_all()), "")
 
     def test_slice(self):
         reader = OFReader("abcdefg")
         reader.skip(2)
-        self.assertEquals(reader.slice(3).read_all(), "cde")
-        self.assertEquals(reader.slice(2).read_all(), "fg")
+        self.assertEquals(str(reader.slice(3).read_all()), "cde")
+        self.assertEquals(str(reader.slice(2).read_all()), "fg")
         self.assertEquals(reader.is_empty(), True)
 
 if __name__ == '__main__':

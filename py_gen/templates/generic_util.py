@@ -95,7 +95,7 @@ class OFReader(object):
     def read_all(self):
         buf = buffer(self.buf, self.offset)
         self.offset += len(buf)
-        return str(buf)
+        return buf
 
     def peek(self, fmt):
         st = struct.Struct(fmt)
@@ -105,7 +105,7 @@ class OFReader(object):
         return result
 
     def peek_all(self):
-        return str(buffer(self.buf, self.offset))
+        return buffer(self.buf, self.offset)
 
     def skip(self, length):
         if self.offset + length > len(self.buf):
