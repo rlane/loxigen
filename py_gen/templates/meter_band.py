@@ -40,7 +40,7 @@ import loxi
 def unpack_list(reader):
     import parser
     def deserializer(reader, typ):
-        return parser.parse_meter_band(reader.peek_all())
+        return parser.parse_meter_band(reader)
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 class MeterBand(object):

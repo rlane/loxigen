@@ -44,7 +44,7 @@ import oxm # for unpack
 def unpack_list(reader):
     import parser
     def deserializer(reader, typ):
-        return parser.parse_action(reader.peek_all())
+        return parser.parse_action(reader)
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 class Action(object):

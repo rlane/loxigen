@@ -78,7 +78,6 @@ class ${ofclass.pyname}(Message):
 
     @staticmethod
     def unpack(buf):
-        if len(buf) < 8: raise loxi.ProtocolError("buffer too short to contain an OpenFlow message")
         obj = ${ofclass.pyname}()
 :: include('_unpack.py', ofclass=ofclass, version=version)
         return obj
@@ -114,4 +113,4 @@ def parse_header(buf):
 
 def parse_message(buf):
     import parser
-    return parser.parse_message(buf)
+    return parser.parse_message(loxi.generic_util.OFReader(buf))

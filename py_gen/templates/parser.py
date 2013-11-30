@@ -47,22 +47,18 @@ import oxm
 import meter_band
 :: #endif
 
-uint8 = struct.Struct("!B")
-uint16 = struct.Struct("!H")
-uint32 = struct.Struct("!L")
-:: structs = { 1: "uint8", 2: "uint16", 4: "uint32" }
+:: fmts = { 1: "B", 2: "!H", 4: "!L" }
 
 :: for parser in sorted(parsers):
+:: fmt = fmts[parser.discriminator_length]
 
-def ${parser.name}(buf):
+def ${parser.name}(reader):
+    subtype, = reader.peek(${repr(fmt)}, ${parser.discriminator_offset})
     try:
-        subtype, = ${structs[parser.discriminator_length]}.unpack_from(buf, ${parser.discriminator_offset})
         child_parser = ${parser.name[6:]}_children[subtype]
-    except struct.error:
-        raise loxi.ProtocolError("Buffer too short (%d bytes)" % len(buf))
     except KeyError:
         raise loxi.ProtocolError("unknown ${parser.name[6:]} type %#x" % subtype)
-    return child_parser(buf)
+    return child_parser(reader)
 :: #endfor
 
 :: for parser in sorted(parsers):

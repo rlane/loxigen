@@ -55,7 +55,7 @@ def unpack_list_flow_stats_entry(reader):
 def unpack_list_queue_prop(reader):
     import parser
     def deserializer(reader, typ):
-        return parser.parse_common_queue_prop(reader.peek_all())
+        return parser.parse_common_queue_prop(reader)
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 def unpack_list_packet_queue(reader):
@@ -68,7 +68,7 @@ def unpack_list_hello_elem(reader):
     import parser
     def deserializer(reader, typ):
         try:
-            return parser.parse_common_hello_elem(reader.peek_all())
+            return parser.parse_common_hello_elem(reader)
         except loxi.ProtocolError:
             return None
     return [x for x in loxi.generic_util.unpack_list_tlv16(reader, deserializer) if x != None]

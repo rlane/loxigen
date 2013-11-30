@@ -41,7 +41,7 @@ def unpack(reader):
     import parser
     type_len, = reader.peek('!L')
     length = type_len & 0xff
-    return parser.parse_oxm(reader.slice(length+4).read_all())
+    return parser.parse_oxm(reader.slice(length+4))
 
 def unpack_list(reader):
     return loxi.generic_util.unpack_list(reader, unpack)

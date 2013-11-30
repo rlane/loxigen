@@ -127,8 +127,6 @@ class TestAllOF13(unittest.TestCase):
                 buf = obj.pack()
                 obj2 = ofp.message.parse_message(buf)
                 self.assertEquals(obj, obj2)
-                obj3 = ofp.parser.parse_message(buf)
-                self.assertEquals(obj, obj3)
             if klass in expected_failures:
                 self.assertRaises(Exception, fn)
             else:

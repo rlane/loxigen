@@ -41,7 +41,7 @@ import loxi
 def unpack_list(reader):
     import parser
     def deserializer(reader, typ):
-        return parser.parse_instruction(reader.peek_all())
+        return parser.parse_instruction(reader)
     return loxi.generic_util.unpack_list_tlv16(reader, deserializer)
 
 class Instruction(object):
