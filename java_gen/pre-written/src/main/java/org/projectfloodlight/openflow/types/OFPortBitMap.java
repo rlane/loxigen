@@ -1,5 +1,7 @@
 package org.projectfloodlight.openflow.types;
 
+import java.util.ArrayList;
+
 import javax.annotation.concurrent.Immutable;
 
 
@@ -59,6 +61,27 @@ public class OFPortBitMap extends Masked<OFBitMask128> {
             builder.set(port);
         }
         return builder.build();
+    }
+
+    /** @return an OFPortBitmap based on the 'mask' part of an OFBitMask128, as, e.g., returned
+     *  by the switch.
+     **/
+    public static OFPortBitMap of(OFBitMask128 mask) {
+        return new OFPortBitMap(mask);
+    }
+
+    /** @return iterating over all ports that are logically included in the
+     *  match, i.e., whether a packet from in-port <emph>port</emph> be matched by
+     *  this OXM.
+     */
+    public Iterable<OFPort> getOnPorts() {
+        ArrayList<OFPort> ports = new ArrayList<>();
+        for(int i=0; i < 127; i++) {
+            if(!(this.mask.isOn(i))) {
+                ports.add(OFPort.of(i));
+            }
+        }
+        return ports;
     }
 
     @Override

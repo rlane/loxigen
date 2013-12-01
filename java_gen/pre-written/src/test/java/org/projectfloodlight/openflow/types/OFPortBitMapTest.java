@@ -1,11 +1,28 @@
 package org.projectfloodlight.openflow.types;
 
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertThat;
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
 public class OFPortBitMapTest extends TestCase {
+    @Test
+    public void testCreateAndIterate() {
+        OFPortBitMap map = OFPortBitMap.ofPorts(OFPort.of(1), OFPort.of(2), OFPort.of(5));
+
+        assertThat(map.getOnPorts(), contains(OFPort.of(1), OFPort.of(2), OFPort.of(5)));
+    }
+
+    @Test
+    public void testOFBitMap() {
+        OFBitMask128 bitmap = OFBitMask128.of(0xFFFF_FFFF_FFFF_FFFFL, 0xFFFF_FFFF_FFFF_FFD9L);
+
+        OFPortBitMap map = OFPortBitMap.of(bitmap);
+
+        assertThat(map.getOnPorts(), contains(OFPort.of(1), OFPort.of(2), OFPort.of(5)));
+    }
 
     @Test
     public void testOFPortBitMap() {
