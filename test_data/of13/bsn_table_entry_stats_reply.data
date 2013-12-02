@@ -1,6 +1,6 @@
 -- binary
 04 13 # version, type
-00 60 # length
+00 68 # length
 12 34 56 78 # xid
 ff ff # stats_type
 00 00 # flags
@@ -23,6 +23,7 @@ ff ff # stats_type
 03 # stats[0].type
 0c # stats[0].length
 00 00 00 00 00 00 00 65 # stats[0].value
+00 00 00 00 # align
 
 # entries[1]
 00 24 # length
@@ -39,6 +40,7 @@ ff ff # stats_type
 03 # stats[0].type
 0c # stats[0].length
 00 00 00 00 00 00 00 65 # stats[0].value
+00 00 00 00 # align
 -- python
 ofp.message.bsn_table_entry_stats_reply(
     xid=0x12345678,

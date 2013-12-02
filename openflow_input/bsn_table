@@ -113,13 +113,12 @@ struct of_bsn_table_entry_desc_stats_request : of_bsn_stats_request {
     of_checksum_128_t checksum_mask;
 };
 
-struct of_bsn_table_entry_desc_stats_entry {
+struct of_bsn_table_entry_desc_stats_entry(align=8, length_includes_align=False) {
     uint16_t length;
     uint16_t key_length;
     of_checksum_128_t checksum;
     list(of_tlv_t) key;
     list(of_tlv_t) value;
-    // TODO pad?
 };
 
 struct of_bsn_table_entry_desc_stats_reply : of_bsn_stats_reply {
@@ -151,12 +150,11 @@ struct of_bsn_table_entry_stats_request : of_bsn_stats_request {
     of_checksum_128_t checksum_mask;
 };
 
-struct of_bsn_table_entry_stats_entry {
+struct of_bsn_table_entry_stats_entry(align=8, length_includes_align=False) {
     uint16_t length;
     uint16_t key_length;
     list(of_tlv_t) key;
     list(of_tlv_t) stats;
-    // TODO pad?
 };
 
 struct of_bsn_table_entry_stats_reply : of_bsn_stats_reply {
@@ -188,6 +186,7 @@ struct of_bsn_table_desc_stats_entry {
     uint16_t length;
     uint16_t table_id;
     of_table_name_t name;
+    pad(4);
     /* TODO properties */
 };
 
